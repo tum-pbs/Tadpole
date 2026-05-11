@@ -1,0 +1,5 @@
+einops
+torchfsm
+diffusers
+timm
+GIFt @ git+https://github.com/qiauil/GIFt
