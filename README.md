@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/badge/Huggingface-Tadpole-FFD21E?logo=huggingface" alt="Pretrained weights on Hugging face"/>
 </a>
 </p>
-<img src="assets/images/reconstruction_vis_example_github.png"/>
+<img src="assets/images/reconstruction_vis_example_github.svg"/>
 
 ## About
 * **What is Tadpole?**
@@ -28,7 +28,7 @@ Tadpole distinguishes itself from existing PDE foundation models in three key as
 
 (3) Tadpole is able to process multiple downstream tasks, including autoencoding, dynamics prediction, and generative modeling.
 
-<img src="assets/images/graphical_abstract_githb.png"/>
+<img src="assets/images/graphical_abstract_github.svg"/>
 
 ## Paper Info
 
