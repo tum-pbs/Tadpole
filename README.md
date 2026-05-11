@@ -22,11 +22,11 @@ Tadpole is a foundation model for three-dimensional partial differential equatio
 
 Tadpole distinguishes itself from existing PDE foundation models in three key aspects: 
 
-(1) Tadpole is pre-trained as an *autoencoder* to learn the inherent representation of PDE solutions, which is more generalizable than the traditional paradigm of training PDE foundation models directly on the dynamics evolution of PDE solutions.
+(1) Tadpole is pre-trained as an ***autoencoder*** to learn the inherent representation of PDE solutions, which is more generalizable than the traditional paradigm of training PDE foundation models directly on the dynamics evolution of PDE solutions.
 
-(2) Tadpole is pretrained with *online learning*. which utilize a GPU-based solver to generate diverse data distribution without IO or storage bottlenecks induced by 3D PDE data.
+(2) Tadpole is pretrained with ***online learning***. which utilize a GPU-based solver to generate diverse data distribution without IO or storage bottlenecks induced by 3D PDE data.
 
-(3) Tadpole is able to process *multiple downstream tasks*, including autoencoding, dynamics prediction, and generative modeling.
+(3) Tadpole is able to process ***multiple downstream tasks***, including autoencoding, dynamics prediction, and generative modeling.
 
 <img src="assets/images/graphical_abstract_github.svg"/>
 
