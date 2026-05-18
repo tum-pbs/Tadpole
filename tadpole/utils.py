@@ -49,3 +49,4 @@ def load_weights(weight:Union[str, dict],model_name:str) -> dict:
             weight = torch.load(weight, weights_only=True)
     else:
         print(f"Using provided weights for {model_name}.")
+    return weight
