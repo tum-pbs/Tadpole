@@ -47,7 +47,7 @@ Tadpole distinguishes itself from existing PDE foundation models in three key as
 
 ```latex
 @article{Liu2026Tadpole,
-  author = {Qiang Liu, Felix Koehler, Benjamin Holzschuh, and Nils Thuerey},
+  author = {Qiang Liu and Felix Koehler and Benjamin Holzschuh and Nils Thuerey},
   title = {Tadpole: Autoencoders as Foundation Models for 3D PDEs with Online Learning},
   eprint={2605.15284},
   archivePrefix={arXiv},
