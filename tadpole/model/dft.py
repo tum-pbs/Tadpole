@@ -54,9 +54,6 @@ class TadpoleDFT(Module):
                 latent_type: Literal["sample", "mode"] = "sample",
                 encoder_crop_size: Optional[int] = None,
                 max_internal_batchsize: Optional[int] = None,
-                encoder_activation_ckpt: bool = False,
-                decoder_activation_ckpt: bool = False, 
-                subnetwork_activation_ckpt: bool = False,
                 ):
         """
         Tadpole Dynamic Fine-Tuning (DFT) Model
@@ -74,9 +71,6 @@ class TadpoleDFT(Module):
             latent_type (Literal["sample", "mode"]): How to sample from the latent distribution, either "sample" or "mode". Default is "sample".
             encoder_crop_size (Optional[int]): Size to crop input for encoder. If None, no cropping will be applied and the entire input will be processed as a single crop. Default is None.
             max_internal_batchsize (Optional[int]): Maximum batch size for internal processing. If None, all crops will be processed in a single batch. Default is None.
-            encoder_activation_ckpt (bool): Whether to apply activation checkpointing to the encoder. Default is False.
-            decoder_activation_ckpt (bool): Whether to apply activation checkpointing to the decoder. Default is False.
-            subnetwork_activation_ckpt (bool): Whether to apply activation checkpointing to the subnetwork. Default is False.
         """
         super().__init__()
         
@@ -106,8 +100,8 @@ class TadpoleDFT(Module):
                 for param in self.decoder.parameters():
                     param.requires_grad = False
         # add skip connections and activation checkpointing for encoder and decoder
-        self.encoder = KLP3DEncoderSkip(self.encoder, encoder_activation_ckpt)
-        self.decoder = P3DDecoderSkip(self.decoder, decoder_activation_ckpt)  
+        self.encoder = KLP3DEncoderSkip(self.encoder)
+        self.decoder = P3DDecoderSkip(self.decoder)  
         # build subnetwork
         if subnetwork == "default":
             self.subnetwork = default_subnetwork(size, input_channels)
@@ -121,7 +115,6 @@ class TadpoleDFT(Module):
         self.latent_type = latent_type
         self.encoder_crop_size = encoder_crop_size if encoder_crop_size is not None else 1e6
         self.max_internal_batchsize = max_internal_batchsize
-        self.subnetwork_activation_ckpt = subnetwork_activation_ckpt
         
     def latent_sample(self, dist: DiagonalGaussianDistribution) -> torch.Tensor:
         if self.latent_type == "sample":
@@ -168,11 +161,7 @@ class TadpoleDFT(Module):
                 V=v,
                 W=w,
             )
-            if self.subnetwork_activation_ckpt is not None:
-                if self.subnetwork_activation_ckpt:
-                    x = self.latent_residual_scale * x + checkpoint(self.subnetwork, x, *args, **kwargs)
-                else:
-                    x = self.latent_residual_scale * x + self.subnetwork(x, *args, **kwargs)
+            x = self.latent_residual_scale * x + self.subnetwork(x, *args, **kwargs)
             x = rearrange(
                 x,
                 "B (C Cl) (U Xl) (V Yl) (W Zl) -> (B C U V W) Cl Xl Yl Zl",
